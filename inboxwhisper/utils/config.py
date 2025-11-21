@@ -30,11 +30,6 @@ class Config:
     # LangSmith
     LANGSMITH_API_KEY = os.getenv("LANGSMITH_API_KEY") or os.getenv("LANGCHAIN_API_KEY")
 
-    # Blackboard
-    BLACKBOARD_BASE_URL = os.getenv("BLACKBOARD_BASE_URL", "https://blackboard.snu.edu.in")
-    BLACKBOARD_USERNAME = os.getenv("BLACKBOARD_USERNAME")
-    BLACKBOARD_PASSWORD = os.getenv("BLACKBOARD_PASSWORD")
-
     # Playwright
     PLAYWRIGHT_HEADLESS = os.getenv("PLAYWRIGHT_HEADLESS", "1")
     DOWNLOAD_DIR = os.getenv("DOWNLOAD_DIR", "./files")
