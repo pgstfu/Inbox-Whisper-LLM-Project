@@ -1,4 +1,5 @@
 from utils.graph_api import graph_get
+from utils.html_cleaner import clean_html_to_text
 
 def ingest_email_azure(access_token):
     """
@@ -17,11 +18,15 @@ def ingest_email_azure(access_token):
 
     message = data["value"][0]
 
+    body_raw = mail.get("body", {}).get("content", "")
+    body_clean = clean_html_to_text(body_raw)
+
     email_dict = {
-        "from": message["from"]["emailAddress"]["address"],
-        "subject": message.get("subject", ""),
-        "body": message.get("body", {}).get("content", ""),
-        "received": message.get("receivedDateTime", "")
+        "from": sender_email,
+        "subject": subject,
+        "body": body_clean,
+        "attachments": attachments,
+        "received": mail["receivedDateTime"]
     }
 
     return email_dict
