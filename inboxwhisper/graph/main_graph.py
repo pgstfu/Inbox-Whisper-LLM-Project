@@ -1,10 +1,11 @@
 from langgraph.graph import StateGraph, END
 from utils.langsmith_setup import setup_langsmith
 from nodes.email_ingest_azure import ingest_email_azure
-from nodes.email_parser import parse_email
+from nodes.email_to_task import email_to_task_struct
 from nodes.summary_node import summarize_parsed
 from utils.oauth_callback_server import last_token
 from utils.token_manager import get_token_silent
+from utils.priority import score_task
 
 # NEW: import tracer context
 from langchain_core.tracers.context import tracing_v2_enabled
@@ -45,8 +46,9 @@ def build_inbox_graph():
     # -------------------------------
     def node_parse(state):
         with tracing_v2_enabled("email_parse_llm"):
-            parsed = parse_email(state["email_raw"])
-            state["parsed"] = parsed
+            task = email_to_task_struct(state["email_raw"])
+            task["priority"] = score_task(task)
+            state["parsed"] = task
             return state
 
     graph.add_node("parse", node_parse)

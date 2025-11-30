@@ -11,11 +11,14 @@ def summarize_parsed(parsed):
     prompt = f"""
     Create a short human-readable summary of this academic task:
 
-    {parsed}
+    Parsed task JSON: {parsed}
 
-    Summary should be:
-    - 1-2 sentences
-    - Student-friendly
+    Include:
+    - Task type, course (if any), due date, and priority score.
+    - The key action item sentence.
+    - If student_slot_details is present, explicitly mention the slot/timing.
+
+    Summary should be 2 concise sentences max.
     """
 
     response = client.chat.completions.create(

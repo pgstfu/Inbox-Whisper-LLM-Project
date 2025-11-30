@@ -36,6 +36,13 @@ def extract_excel_text(path):
         return ""
     return text
 
+
+def extract_text_file(path):
+    try:
+        return Path(path).read_text(encoding="utf-8", errors="ignore")
+    except Exception:
+        return ""
+
 def extract_attachment_text(file_path):
     file_path = str(file_path)
     p = Path(file_path)
@@ -50,6 +57,9 @@ def extract_attachment_text(file_path):
 
     if ext in [".xls", ".xlsx"]:
         return extract_excel_text(file_path)
+
+    if ext in [".txt", ".csv"]:
+        return extract_text_file(file_path)
 
     # Other unsupported types → return ""
     return ""

@@ -23,6 +23,7 @@ def parse_email(email_dict):
       "date": string | null,
       "time": string | null,
       "deadline": string | null,
+      "location": string | null,
       "summary": string,
       "action_item": string,
       "raw_subject": string,
@@ -31,7 +32,12 @@ def parse_email(email_dict):
 
     Email:
     SUBJECT: {email_dict['subject']}
-    BODY: {email_dict['body']}
+    BODY (with attachment text appended and delimited by [ATTACHMENT TEXT]): {email_dict['body']}
+
+    If you find exam/viva schedules or seating plans, include the exact slot
+    or timing in "action_item". Always capture explicit venues/rooms inside
+    the "location" field. Mention specific instructions for PRANAV GUPTA
+    (roll 2410110241) when present in the email or attachments.
 
     Return strictly valid JSON only.
     """
