@@ -406,3 +406,4 @@ def answer_task_question(question: str, tasks: List[Dict]) -> str:
     """Original function signature for backward compatibility."""
     return answer_task_question_advanced(question, tasks, strategy="hybrid" if HAS_SENTENCE_TRANSFORMERS else "keyword")
 
+
