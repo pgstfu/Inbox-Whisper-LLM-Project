@@ -33,3 +33,5 @@ def extract_location(text: str | None) -> str | None:
 
     return None
 
+
+

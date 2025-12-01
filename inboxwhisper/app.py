@@ -4,7 +4,13 @@ import calendar as pycal
 from graph.main_graph import build_inbox_graph
 from utils.task_db import init_db, list_tasks, update_task_status
 from utils.task_presenter import concise_task_lines, format_due_date
-from utils.task_chatbot import answer_task_question
+# Try to use advanced RAG if available, fallback to basic keyword search
+try:
+    from utils.task_chatbot_advanced import answer_task_question_advanced
+    HAS_ADVANCED_RAG = True
+except ImportError:
+    from utils.task_chatbot import answer_task_question
+    HAS_ADVANCED_RAG = False
 from utils.ics_export import tasks_ics_bytes
 
 st.set_page_config(page_title="InboxWhisper+", layout="wide", initial_sidebar_state="expanded")
@@ -170,6 +176,18 @@ with tab_chat:
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = []
 
+    # Strategy selection (only show if advanced RAG is available)
+    if HAS_ADVANCED_RAG:
+        strategy = st.selectbox(
+            "Retrieval Strategy",
+            ["hybrid", "semantic", "rerank", "temporal", "keyword"],
+            index=0,
+            help="hybrid = best balance (recommended), semantic = fast, rerank = most accurate, temporal = recent tasks, keyword = basic"
+        )
+    else:
+        strategy = "keyword"
+        st.info("💡 Install 'sentence-transformers' for advanced semantic search: `pip install sentence-transformers`")
+
     for message in st.session_state.chat_history:
         st.chat_message(message["role"]).write(message["content"])
 
@@ -178,7 +196,10 @@ with tab_chat:
         st.session_state.chat_history.append({"role": "user", "content": question})
         st.chat_message("user").write(question)
         with st.spinner("Thinking..."):
-            answer = answer_task_question(question, tasks_snapshot)
+            if HAS_ADVANCED_RAG:
+                answer = answer_task_question_advanced(question, tasks_snapshot, strategy=strategy)
+            else:
+                answer = answer_task_question(question, tasks_snapshot)
         st.session_state.chat_history.append({"role": "assistant", "content": answer})
         st.chat_message("assistant").write(answer)
 
