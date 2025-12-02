@@ -170,7 +170,7 @@ I plan to execute these steps to complete my project.
 - [DONE] Step 5: Create the persistence layer using SQLite (task table, upsert logic, listing and status update functions) so that parsed tasks are stored and can be reloaded across sessions.
 - [DONE] Step 6: Build the Streamlit UI with multiple tabs: Analyze Email (one-off graph run), Task Board (list + prioritize tasks), Chatbot (ask questions about tasks using a RAG-style workflow), and Calendar (due-date calendar + `.ics` export).
 - [DONE] Step 7: Integrate LangSmith tracing for the LangGraph pipeline and run several example emails to debug prompt quality, structured output consistency, and node-level behavior.
-- [TODO] Step 8: Record a 3–5 minute summary video (showing my face, explaining inputs/outputs, briefly walking through how the agent works, and demonstrating an example run) and add the link above.
+- [TODO] Step 8: Record a 3–5 minute summary video (showing my face, explaining inputs/outputs, briefly walking through how the agent works, and demonstrating an example run) and add the link above. ```https://www.loom.com/edit/7d1ded1b8019411c90ab112f1fe3e35f```
 - [TODO] Step 9: Final polishing: refine prompts based on a few more test emails, clean up any rough edges in the UI, and ensure the README and code comments are clear enough that I can explain every line in a viva.
 
 ## Key Design Decisions
