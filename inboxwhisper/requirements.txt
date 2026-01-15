@@ -29,6 +29,4 @@ playwright==1.44.0
 beautifulsoup4>=4.9.0
 requests>=2.28.0
 
-# Optional: Advanced RAG (for semantic search)
-# Uncomment to enable semantic/hybrid/rerank retrieval strategies:
-# sentence-transformers>=2.2.0
+python-dateutil
